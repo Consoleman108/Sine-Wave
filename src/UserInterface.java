@@ -70,48 +70,7 @@ public class UserInterface extends JFrame {
 
         getContentPane().add(mainJPanel, BorderLayout.CENTER);
         setVisible(true);
-
-
-        // Добавляем выбор волны
-        /*JPanel jPanel = new JPanel();
-        // Основной менеджер размещения состоящий из 6 строк
-        GridLayout gridLayout = new GridLayout(6,2,35,5);
-        // Размещаем нашу панель в панели содержимого
-        jPanel.setLayout(gridLayout);
-        //jPanel.add(new JSeparator());
-
-        jPanel.add(getLable("WaveForm"));
-        // Создаем панель для радио кнопок стабличным менеджером размещения с одной строкой
-        JPanel panelRadioButton = new JPanel(new GridLayout(1, 0, 0, 5));
-        panelRadioButton.setBorder(BorderFactory.createTitledBorder("Wave Form"));
-
-        // Список для типов волн
-        String[] waveForm = { "Sin", "Saw", "Triangle" };
-
-        // Создаем группу радиокнопок
-        ButtonGroup buttonGroup = new ButtonGroup();
-        // Оъединяем кнопки в группу
-        for (int i = 0; i < waveForm.length; i++) {
-            JRadioButton jRadioButton = new JRadioButton(waveForm[i]);
-            panelRadioButton.add(jRadioButton);
-            buttonGroup.add(jRadioButton);
-        }
-        jPanel.add(panelRadioButton);
-
-        // Наполняем пользовательский интерфейс содержимым
-        jPanel.add(getLable("Pitch"));
-        jPanel.add(sliderPitch);
-
-        jPanel.add(getLable("Volume"));
-        jPanel.add(sliderVolume);
-
-        jPanel.add(getLable("Modulation"));
-        jPanel.add(sliderModulation);
-
-        getContentPane().add(jPanel);
-
-        // Открываем окно
-        setVisible(true);*/
+        
     }
 
     public double getSliderPitchValue(){
