@@ -31,7 +31,7 @@ public class UserInterface extends JFrame {
         panelRadioButton.setBorder(BorderFactory.createTitledBorder("Wave Form"));
 
         // Список для типов волн
-        String[] waveForm = { "Sin", "Saw", "Triangle" };
+        String[] waveForm = { "Sin", "Saw", "Triangle", "Pulse" };
 
         // Создаем группу радиокнопок
         ButtonGroup buttonGroup = new ButtonGroup();
@@ -71,7 +71,7 @@ public class UserInterface extends JFrame {
         getContentPane().add(mainJPanel, BorderLayout.CENTER);
         setVisible(true);
 
-        
+
         // Добавляем выбор волны
         /*JPanel jPanel = new JPanel();
         // Основной менеджер размещения состоящий из 6 строк
