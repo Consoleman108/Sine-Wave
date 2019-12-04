@@ -7,6 +7,10 @@ public class UserInterface extends JFrame {
 
     public final static Dimension RIGID_DIMENSION = new Dimension(1, 3);
 
+    /* TODO:
+        Изменить метод initSlider использовать конструктор чтоб задавать начальные параметры слайдера
+        public JSlider(int orientation, int min, int max, int value);
+        */
     private JSlider sliderPitch = initSlider("Pitch", 100, 500, 4100,440);
     private JSlider sliderVolume = initSlider("Volume", 0, 50, 100,30);;
     private JSlider sliderModulation = initSlider("Modulation", 0, 500, 1000,50);;
@@ -30,6 +34,7 @@ public class UserInterface extends JFrame {
         JPanel panelRadioButton = new JPanel(new GridLayout(1, 0, 0, 5));
         panelRadioButton.setBorder(BorderFactory.createTitledBorder("Wave Form"));
 
+        /*TODO дописать обработчик событий выбора типа волны*/
         // Список для типов волн
         String[] waveForm = { "Sin", "Saw", "Triangle", "Pulse" };
 
@@ -71,9 +76,10 @@ public class UserInterface extends JFrame {
         return jLabel;
     }
 
-    private JSlider initSlider(String sliderName, int minimum,int majorTickSpacing, int maximum, int defaultValue){
+    private JSlider initSlider(String title, int minimum, int majorTickSpacing, int maximum, int defaultValue){
         JSlider jSlider = new JSlider();
-        jSlider.setName(sliderName);
+
+        jSlider.setName(title);
         jSlider.setMinimum(minimum);
         jSlider.setPaintLabels(true);
         jSlider.setPaintTicks(true);

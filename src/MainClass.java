@@ -3,6 +3,7 @@ import java.awt.*;
 import javax.swing.*;
 import javax.sound.sampled.*;
 
+/* TODO Убрать из класса MainClass генерирование волны в класс AudioProcessor*/
 public class MainClass extends JFrame {
     private SampleThread m_thread;
     AudioProcessor audioProcessor = new AudioProcessor();
