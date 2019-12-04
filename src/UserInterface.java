@@ -43,34 +43,13 @@ public class UserInterface extends JFrame {
         }
         mainJPanel.add(panelRadioButton);
 
-        JPanel secondPanel = new JPanel();
-
-        secondPanel.setBorder(new TitledBorder(new EtchedBorder(), "Pitch"));
-        secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.Y_AXIS));
-        secondPanel.add(Box.createRigidArea(RIGID_DIMENSION));
-        secondPanel.add(sliderPitch);
-        secondPanel.add(Box.createRigidArea(RIGID_DIMENSION));
-        mainJPanel.add(secondPanel);
-
-        secondPanel = new JPanel();
-        secondPanel.setBorder(new TitledBorder(new EtchedBorder(), "Volume"));
-        secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.Y_AXIS));
-        secondPanel.add(Box.createRigidArea(RIGID_DIMENSION));
-        secondPanel.add(sliderVolume);
-        secondPanel.add(Box.createRigidArea(RIGID_DIMENSION));
-        mainJPanel.add(secondPanel);
-
-        secondPanel = new JPanel();
-        secondPanel.setBorder(new TitledBorder(new EtchedBorder(), "Modulation"));
-        secondPanel.setLayout(new BoxLayout(secondPanel, BoxLayout.Y_AXIS));
-        secondPanel.add(Box.createRigidArea(RIGID_DIMENSION));
-        secondPanel.add(sliderModulation);
-        secondPanel.add(Box.createRigidArea(RIGID_DIMENSION));
-        mainJPanel.add(secondPanel);
+        mainJPanel.add(initPanel("Pitch", sliderPitch));
+        mainJPanel.add(initPanel("Volume", sliderVolume));
+        mainJPanel.add(initPanel("Modulation", sliderModulation));
 
         getContentPane().add(mainJPanel, BorderLayout.CENTER);
         setVisible(true);
-        
+
     }
 
     public double getSliderPitchValue(){
@@ -102,5 +81,16 @@ public class UserInterface extends JFrame {
         jSlider.setMaximum(maximum);
         jSlider.setValue(defaultValue);
         return jSlider;
+    }
+
+    private JPanel initPanel(String title, JSlider jSlider){
+        JPanel jPanel = new JPanel();
+
+        jPanel.setBorder(new TitledBorder(new EtchedBorder(), title));
+        jPanel.setLayout(new BoxLayout(jPanel, BoxLayout.Y_AXIS));
+        jPanel.add(Box.createRigidArea(RIGID_DIMENSION));
+        jPanel.add(jSlider);
+        jPanel.add(Box.createRigidArea(RIGID_DIMENSION));
+        return jPanel;
     }
 }
