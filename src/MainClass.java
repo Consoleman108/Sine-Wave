@@ -53,8 +53,10 @@ public class MainClass extends JFrame {
         public double fFreqDelat;
         public double fFrecCyclePosition;
         public double fModulation;
+        public double fFilter;
         Oscillator oscillator = new Oscillator();
         Oscillator lowFrecOscillator = new Oscillator();
+        Filter filter =  new Filter();
 
 
         //Get the number of queued samples in the SourceDataLine buffer
@@ -90,6 +92,7 @@ public class MainClass extends JFrame {
                 fVolDelta = fVol * Short.MAX_VALUE/100;
                 
                 fModulation = audioProcessor.getUserInterface().getSliderModulationValue();
+                fFilter = audioProcessor.getUserInterface().getSliderFilterValue();
                 
                 
                 double fCycleInc = fFreq/SAMPLING_RATE;                             // Fraction of cycle between samples
@@ -101,7 +104,9 @@ public class MainClass extends JFrame {
                 for (int i = 0; i < SINE_PACKET_SIZE/SAMPLE_SIZE; i++) {
                                              
                     //cBuf.putShort((short)(fVolDelta * Math.sin(2*Math.PI * fCyclePosition)));
-                    cBuf.putShort((short)(fVolDelta * lowFrecOscillator.getSample(fFrecCyclePosition, "Sin") * oscillator.getSample(fCyclePosition,"Sin") ));
+                    //cBuf.putShort((short) filter.Process(fVolDelta * lowFrecOscillator.getSample(fFrecCyclePosition, "Sin") * oscillator.getSample(fCyclePosition,"Noise") ));
+                    cBuf.putShort((short) filter.Process(fVolDelta * oscillator.getSample(fCyclePosition,"Sin"), fFilter ));
+                    //cBuf.putShort((short) (fVolDelta * oscillator.getSample(fCyclePosition,"WiteNoise" )));
 
                     fCyclePosition += fCycleInc; //(fCycleInc + fFrecCyclePosition/100);
                     fFrecCyclePosition += fFrecCycleInc;

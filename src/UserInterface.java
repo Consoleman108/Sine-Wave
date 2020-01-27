@@ -14,7 +14,9 @@ public class UserInterface extends JFrame {
 
     private JSlider sliderPitch = initSlider("Pitch", 100, 500, 4100,440);
     private JSlider sliderVolume = initSlider("Volume", 0, 50, 100,30);;
-    private JSlider sliderModulation = initSlider("Modulation", 0, 500, 1000,50);;
+    private JSlider sliderModulation = initSlider("Modulation", 0, 500, 1000,50);
+    private JSlider sliderFilter = initSlider("FIlter", 100, 500, 4100,200);
+    ;
 
 
     public UserInterface(AudioProcessor currentAudioProcessor){
@@ -30,7 +32,7 @@ public class UserInterface extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel mainJPanel = new JPanel();
-        mainJPanel.setLayout(new GridLayout(4, 1));
+        mainJPanel.setLayout(new GridLayout(5, 1));
 
         JPanel panelRadioButton = new JPanel(new GridLayout(1, 0, 0, 5));
         panelRadioButton.setBorder(BorderFactory.createTitledBorder("Wave Form"));
@@ -52,6 +54,7 @@ public class UserInterface extends JFrame {
         mainJPanel.add(initPanel("Pitch", sliderPitch));
         mainJPanel.add(initPanel("Volume", sliderVolume));
         mainJPanel.add(initPanel("Modulation", sliderModulation));
+        mainJPanel.add(initPanel("Filter", sliderFilter));
 
         getContentPane().add(mainJPanel, BorderLayout.CENTER);
         setVisible(true);
@@ -68,6 +71,9 @@ public class UserInterface extends JFrame {
 
     public double getSliderModulationValue(){
         return sliderModulation.getValue();
+    }
+    public double getSliderFilterValue(){
+        return sliderFilter.getValue();
     }
 
     private JLabel getLable(String lableName){
