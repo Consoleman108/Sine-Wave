@@ -10,7 +10,8 @@ public class UserInterface extends JFrame {
     /* TODO:
         Изменить метод initSlider использовать конструктор чтоб задавать начальные параметры слайдера
         public JSlider(int orientation, int min, int max, int value);
-        */
+    */
+
     private JSlider sliderPitch = initSlider("Pitch", 100, 500, 4100,440);
     private JSlider sliderVolume = initSlider("Volume", 0, 50, 100,30);;
     private JSlider sliderModulation = initSlider("Modulation", 0, 500, 1000,50);;

@@ -101,7 +101,7 @@ public class MainClass extends JFrame {
                 for (int i = 0; i < SINE_PACKET_SIZE/SAMPLE_SIZE; i++) {
                                              
                     //cBuf.putShort((short)(fVolDelta * Math.sin(2*Math.PI * fCyclePosition)));
-                    cBuf.putShort((short)(fVolDelta * lowFrecOscillator.getSample(fFrecCyclePosition) * oscillator.getSample(fCyclePosition) ));
+                    cBuf.putShort((short)(fVolDelta * lowFrecOscillator.getSample(fFrecCyclePosition, "Sin") * oscillator.getSample(fCyclePosition,"Sin") ));
 
                     fCyclePosition += fCycleInc; //(fCycleInc + fFrecCyclePosition/100);
                     fFrecCyclePosition += fFrecCycleInc;
