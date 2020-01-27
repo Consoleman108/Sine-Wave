@@ -58,7 +58,6 @@ public class MainClass extends JFrame {
         Oscillator lowFrecOscillator = new Oscillator();
         Filter filter =  new Filter();
 
-
         //Get the number of queued samples in the SourceDataLine buffer
         private int getLineSampleCount() {
             return line.getBufferSize() - line.available();
@@ -102,7 +101,6 @@ public class MainClass extends JFrame {
 
                 //Generate SINE_PACKET_SIZE samples based on the current fCycleInc from fFreq
                 for (int i = 0; i < SINE_PACKET_SIZE/SAMPLE_SIZE; i++) {
-                                             
                     //cBuf.putShort((short)(fVolDelta * Math.sin(2*Math.PI * fCyclePosition)));
                     //cBuf.putShort((short) filter.Process(fVolDelta * lowFrecOscillator.getSample(fFrecCyclePosition, "Sin") * oscillator.getSample(fCyclePosition,"Noise") ));
                     cBuf.putShort((short) filter.Process(fVolDelta * oscillator.getSample(fCyclePosition,"Sin"), fFilter ));
