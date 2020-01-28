@@ -13,8 +13,8 @@ public class Filter {
 
         public double Process(double s, double filterFreq)
         {
-            lowPassFilter(filterFreq);
-            //hiPassFilter(filterFreq);
+            //lowPassFilter(filterFreq);
+            hiPassFilter(filterFreq);
             //bandPassFilter(filterFreq);
 
             // "сдвигаем" предыдущие семплы

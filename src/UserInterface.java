@@ -1,6 +1,7 @@
 import javax.swing.*;
 import javax.swing.border.*;
 import java.awt.*;
+import java.util.Enumeration;
 
 public class UserInterface extends JFrame {
     private AudioProcessor audioProcessor;
@@ -12,11 +13,11 @@ public class UserInterface extends JFrame {
         public JSlider(int orientation, int min, int max, int value);
     */
 
-    private JSlider sliderPitch = initSlider("Pitch", 100, 500, 4100,440);
+    private JSlider sliderPitch = initSlider("Frequency", 10, 500, 4100,432);
     private JSlider sliderVolume = initSlider("Volume", 0, 50, 100,30);;
     private JSlider sliderModulation = initSlider("Modulation", 0, 500, 1000,50);
-    private JSlider sliderFilter = initSlider("FIlter", 100, 500, 4100,200);
-    ;
+    private JSlider sliderFilter = initSlider("FIlter", 10, 500, 4100,200);
+    private ButtonGroup buttonGroup = new ButtonGroup(); // Создаем группу радиокнопок
 
 
     public UserInterface(AudioProcessor currentAudioProcessor){
@@ -39,19 +40,17 @@ public class UserInterface extends JFrame {
 
         /*TODO дописать обработчик событий выбора типа волны*/
         // Список для типов волн
-        String[] waveForm = { "Sin", "Saw", "Triangle", "Pulse" };
+        String[] waveForm = { "Sin", "Saw", "Triangle", "Pulse", "WiteNoise" };
 
-        // Создаем группу радиокнопок
-        ButtonGroup buttonGroup = new ButtonGroup();
         // Оъединяем кнопки в группу
         for (int i = 0; i < waveForm.length; i++) {
-            JRadioButton jRadioButton = new JRadioButton(waveForm[i]);
-            panelRadioButton.add(jRadioButton);
-            buttonGroup.add(jRadioButton);
+                JRadioButton jRadioButton = new JRadioButton(waveForm[i]);
+                panelRadioButton.add(jRadioButton);
+                buttonGroup.add(jRadioButton);
         }
         mainJPanel.add(panelRadioButton);
 
-        mainJPanel.add(initPanel("Pitch", sliderPitch));
+        mainJPanel.add(initPanel("Frequency", sliderPitch));
         mainJPanel.add(initPanel("Volume", sliderVolume));
         mainJPanel.add(initPanel("Modulation", sliderModulation));
         mainJPanel.add(initPanel("Filter", sliderFilter));
@@ -59,22 +58,36 @@ public class UserInterface extends JFrame {
         getContentPane().add(mainJPanel, BorderLayout.CENTER);
         setVisible(true);
 
+
     }
 
     public double getSliderPitchValue(){
         return sliderPitch.getValue();
     }
-
     public double getSliderVolumeValue(){
         return sliderVolume.getValue();
     }
-
     public double getSliderModulationValue(){
         return sliderModulation.getValue();
     }
     public double getSliderFilterValue(){
         return sliderFilter.getValue();
     }
+
+    public String getWaveType() {
+        String result = null;
+
+        for (Enumeration<AbstractButton> buttons = buttonGroup.getElements(); buttons.hasMoreElements();) {
+            AbstractButton button = buttons.nextElement();
+
+            if (button.isSelected()) {
+                result = button.getText();
+            }
+        }
+
+        return result;
+    }
+
 
     private JLabel getLable(String lableName){
         JLabel jLabel = new JLabel(lableName);
@@ -106,4 +119,5 @@ public class UserInterface extends JFrame {
         jPanel.add(Box.createRigidArea(RIGID_DIMENSION));
         return jPanel;
     }
+
 }
