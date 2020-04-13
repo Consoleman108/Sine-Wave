@@ -45,6 +45,7 @@ public class UserInterface extends JFrame {
         // Оъединяем кнопки в группу
         for (int i = 0; i < waveForm.length; i++) {
                 JRadioButton jRadioButton = new JRadioButton(waveForm[i]);
+                jRadioButton.isSelected();
                 panelRadioButton.add(jRadioButton);
                 buttonGroup.add(jRadioButton);
         }
