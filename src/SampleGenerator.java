@@ -26,17 +26,12 @@ public class SampleGenerator extends Thread {
     Oscillator lowFrecOscillator = new Oscillator();
     Filter filter =  new Filter();
 
-
-    //Get the number of queued samples in the SourceDataLine buffer
     private int getLineSampleCount() {
         return line.getBufferSize() - line.available();
     }
 
 
-    //Continually fill the audio output buffer whenever it starts to get empty, SINE_PACKET_SIZE/2
-    //samples at a time, until we tell the thread to exit
     public void run() {
-        //Position through the sine wave as a percentage (i.e. 0-1 is 0-2*PI)
         oscillatorFreqCyclePosition = 0;
         modulationOscillatorFreqCyclePosition = 0;
 
@@ -45,25 +40,16 @@ public class SampleGenerator extends Thread {
 
         ByteBuffer byteBuffer = ByteBuffer.allocate(SINE_PACKET_SIZE);
 
-        //On each pass main loop fills the available free space in the audio buffer
-        //Main loop creates audio samples for sine wave, runs until we tell the thread to exit
-        //Each sample is spaced 1/SAMPLING_RATE apart in time
-
         while (!isThreadEnd) {
-            oscillatorFrequencySlider = audioProcessor.getUserInterface().getSliderPitchValue();
-            oscillatorVolumeSlider = audioProcessor.getUserInterface().getSliderVolumeValue();
-            oscillatorModulationSlider = audioProcessor.getUserInterface().getSliderModulationValue();
-            oscillatorFilterSlider = audioProcessor.getUserInterface().getSliderFilterValue();
-            waveType = audioProcessor.getUserInterface().getWaveType();
 
-            stepIncrementVolume = Short.MAX_VALUE * oscillatorVolumeSlider /100;
+            getDataUI();
 
-            oscillatorCycleIncrement = oscillatorFrequencySlider/SAMPLING_RATE;                             // Fraction of cycle between samples
-            modulationFreqCycleIncrement = ((oscillatorModulationSlider + 0.01)/ 100)/SAMPLING_RATE;   // Frec for modulation
+            stepIncrementVolume = getStepIncrementVolume();
+            oscillatorCycleIncrement = getOscillatorCycleIncrement();
+            modulationFreqCycleIncrement = getModulationFreqCycleIncrement();
 
-            byteBuffer.clear();                                                       // Toss out samples from previous pass
+            byteBuffer.clear();
 
-            //Generate SINE_PACKET_SIZE samples based on the current fCycleInc from fFreq
             for (int i = 0; i < SINE_PACKET_SIZE/SAMPLE_SIZE; i++) {
                 //cBuf.putShort((short) filter.Process(stepIncrementVolume * oscillator.getSample(oscillatorFreqCyclePosition,"Sin"), oscillatorFilterSlider));
                 byteBuffer.putShort((short) filter.Process(stepIncrementVolume * lowFrecOscillator.getSample(modulationOscillatorFreqCyclePosition,"Sin") * oscillator.getSample(oscillatorFreqCyclePosition, waveType ), oscillatorFilterSlider));
@@ -80,25 +66,38 @@ public class SampleGenerator extends Thread {
                     oscillatorFreqCyclePosition -= 1;
             }
 
-            //Write sine samples to the line buffer
-            // If the audio buffer is full, this would block until there is enough room,
-            // but we are not writing unless we know there is enough space.
             line.write(byteBuffer.array(), 0, byteBuffer.position());
 
-
-            //Wait here until there are less than SINE_PACKET_SIZE samples in the buffer
-            //(Buffer size is 2*SINE_PACKET_SIZE at least, so there will be room for
-            // at least SINE_PACKET_SIZE samples when this is true)
             try {
                 while (getLineSampleCount() > SINE_PACKET_SIZE) {
                     Thread.sleep(1);
-                }                        // Give UI a chance to run
+                }
             }
-            catch (InterruptedException e) {                // We don't care about this
+            catch (InterruptedException e) {
             }
         }
 
         line.drain();
         line.close();
+    }
+
+    private void getDataUI() {
+        oscillatorFrequencySlider = audioProcessor.getUserInterface().getSliderPitchValue();
+        oscillatorVolumeSlider = audioProcessor.getUserInterface().getSliderVolumeValue();
+        oscillatorModulationSlider = audioProcessor.getUserInterface().getSliderModulationValue();
+        oscillatorFilterSlider = audioProcessor.getUserInterface().getSliderFilterValue();
+        waveType = audioProcessor.getUserInterface().getWaveType();
+    }
+
+    private double getStepIncrementVolume() {
+        return Short.MAX_VALUE * oscillatorVolumeSlider /100;
+    }
+
+    private double getOscillatorCycleIncrement() {
+        return oscillatorFrequencySlider/SAMPLING_RATE;
+    }
+
+    private double getModulationFreqCycleIncrement() {
+        return ((oscillatorModulationSlider + 0.01)/ 100)/SAMPLING_RATE;
     }
 }
