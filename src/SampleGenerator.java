@@ -43,7 +43,6 @@ public class SampleGenerator extends Thread {
         while (!isThreadEnd) {
 
             getDataUI();
-
             stepIncrementVolume = getStepIncrementVolume();
             oscillatorCycleIncrement = getOscillatorCycleIncrement();
             modulationFreqCycleIncrement = getModulationFreqCycleIncrement();
@@ -56,8 +55,8 @@ public class SampleGenerator extends Thread {
 
                 oscillatorFreqCyclePosition += oscillatorCycleIncrement;
                 modulationOscillatorFreqCyclePosition += modulationFreqCycleIncrement;
-                System.out.println("FrecCyclePosition = " + oscillatorFreqCyclePosition);
-                System.out.println("Wave Type = " + waveType );
+//                System.out.println("FrecCyclePosition = " + oscillatorFreqCyclePosition);
+//                System.out.println("Wave Type = " + waveType );
 
                 if (oscillatorFreqCyclePosition > 1)
                     oscillatorFreqCyclePosition -= 1;
